@@ -185,8 +185,8 @@ python3 run_inference.py -m $modprm -p "$sysprompt" -cnv --temp 0.3 -t $(nproc)
 # Alternative with a file prompt and sepcific parameters
 tempr="--temp 0.3 --dynatemp-range 0.1 --no-warmup"
 file_prompt=${file_prompt:-/dev/null -p '$sysprompt'}
-pretkns="--override-kv tokenizer.ggml.pre=str:llama3"
-intcnv="-i --multiline-input -cnv -c 8192 -b 4096"
+pretkns="--override-kv tokenizer.ggml.pre=str:llama3 --mlock"
+intcnv="-i --multiline-input -cnv -c 8192 -b 4096 -co --keep -1 -n -1"
 llama-cli -m $modprm -f ${file_prompt} -t $(nproc) $pretkns $tempr $intcnv
 
 ```
