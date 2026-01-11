@@ -173,7 +173,8 @@ link="$url/resolve/main/$gguf"
 modprm="$mdir/$gguf"
 
 mkdir -p $mdir && wget -c "$link" -O $modprm
-pip install -r requirements.txt
+{ python3 -m pip install --upgrade pip; pip install -r requirements.txt; }\
+ | grep -ve "^Requirement already satisfied:"
 python3 setup_env.py -md $mdir -q i2_s
 cmake --build build --config Release
 
