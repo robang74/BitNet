@@ -161,21 +161,27 @@ This project is based on the [llama.cpp](https://github.com/ggerganov/llama.cpp)
 
 ```
 sudo apt install ccache clang libomp-dev
+sudo swapoff -a
 
 git clone --recursive https://github.com/microsoft/BitNet.git
 cd BitNet/
 
 gguf="ggml-model-i2_s.gguf"
-mdir="models/BitNet-b1.58-2B-4T/"
+mdir="models/BitNet-b1.58-2B-4T"
 url="https://huggingface.co/microsoft/bitnet-b1.58-2B-4T-gguf"
 link="$url/resolve/main/$gguf"
 modprm="$mdir/$gguf"
-mkdir -p $mdir && wget -c "$link" -O $modprm
 
+mkdir -p $mdir && wget -c "$link" -O $modprm
+pip install -r requirements.txt
 python3 setup_env.py -md $mdir -q i2_s
+cmake --build build --config Release
 
 sysprompt="You are a helpful assistant"
-python3 run_inference.py -m $modprm -p "$sysprompt" -cnv --temp 0.3
+python3 run_inference.py -m $modprm -p "$sysprompt" -cnv --temp 0.3 -t $(nproc)
+# Alternative with a file prompt
+pretkns="--override-kv tokenizer.ggml.pre=str:llama3"
+llama-cli -m $modprm -f ${file_prompt} -cnv --temp 0.3 -t $(nproc) $pretkns
 
 ```
 
