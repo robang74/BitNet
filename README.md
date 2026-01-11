@@ -157,6 +157,25 @@ This project is based on the [llama.cpp](https://github.com/ggerganov/llama.cpp)
 
 ## Installation
 
+### Ubuntu quck start
+
+```
+sudo apt install ccache clang libomp-dev
+
+git clone --recursive https://github.com/microsoft/BitNet.git
+cd BitNet/
+
+mkdir -p models/BitNet-b1.58-2B-4T/
+link="https://huggingface.co/microsoft/bitnet-b1.58-2B-4T-gguf/resolve/main/ggml-model-i2_s.gguf"
+wget -c "$link" -O models/BitNet-b1.58-2B-4T/ggml-model-i2_s.gguf
+
+python3 setup_env.py -md models/BitNet-b1.58-2B-4T/ -q i2_s
+
+sysprompt="You are a helpful assistant"
+python3 run_inference.py -m models/BitNet-b1.58-2B-4T/ggml-model-i2_s.gguf -p "$sysprompt" -cnv --temp 0.3
+
+```
+
 ### Requirements
 - python>=3.9
 - cmake>=3.22
