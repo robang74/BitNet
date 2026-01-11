@@ -177,11 +177,16 @@ pip install -r requirements.txt
 python3 setup_env.py -md $mdir -q i2_s
 cmake --build build --config Release
 
+export PATH="$PATH:$PWD/build/bin/"
 sysprompt="You are a helpful assistant"
 python3 run_inference.py -m $modprm -p "$sysprompt" -cnv --temp 0.3 -t $(nproc)
-# Alternative with a file prompt
+
+# Alternative with a file prompt and sepcific parameters
+tempr="--temp 0.3 --dynatemp-range 0.1"
+file_prompt=${file_prompt:-/dev/null -p '$sysprompt'}
 pretkns="--override-kv tokenizer.ggml.pre=str:llama3"
-llama-cli -m $modprm -f ${file_prompt} -cnv --temp 0.3 -t $(nproc) $pretkns
+intcnv="-i --multiline-input -cnv -c 4096 -b 2048"
+llama-cli -m $modprm -f ${file_prompt} -t $(nproc) $pretkns $tempr $intcnv
 
 ```
 
