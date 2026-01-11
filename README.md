@@ -165,16 +165,17 @@ sudo apt install ccache clang libomp-dev
 git clone --recursive https://github.com/microsoft/BitNet.git
 cd BitNet/
 
-mkdir -p models/BitNet-b1.58-2B-4T/
+gguf="ggml-model-i2_s.gguf"
+mdir="models/BitNet-b1.58-2B-4T/"
 url="https://huggingface.co/microsoft/bitnet-b1.58-2B-4T-gguf"
-link="$url/resolve/main/ggml-model-i2_s.gguf"
-wget -c "$link" -O models/BitNet-b1.58-2B-4T/ggml-model-i2_s.gguf
+link="$url/resolve/main/$gguf"
+modprm="$mdir/$gguf"
+mkdir -p $mdir && wget -c "$link" -O $modprm
 
-python3 setup_env.py -md models/BitNet-b1.58-2B-4T/ -q i2_s
+python3 setup_env.py -md $mdir -q i2_s
 
 sysprompt="You are a helpful assistant"
-model="models/BitNet-b1.58-2B-4T/ggml-model-i2_s.gguf"
-python3 run_inference.py -m $model -p "$sysprompt" -cnv --temp 0.3
+python3 run_inference.py -m $modprm -p "$sysprompt" -cnv --temp 0.3
 
 ```
 
