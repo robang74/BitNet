@@ -180,7 +180,7 @@ cmake --build build --config Release
 
 export PATH="$PATH:$PWD/build/bin/"
 sysprompt="You are a helpful assistant"
-python3 run_inference.py -m $modprm -p "$sysprompt" -cnv --temp 0.3 -t $(nproc)
+python3 run_inference.py -m $modprm -p "$sysprompt" -t $(nproc) --temp 0.3 -cnv
 
 # Alternative with a file prompt and sepcific parameters
 tempr="--temp 0.3 --dynatemp-range 0.1 --no-warmup"
