@@ -257,7 +257,7 @@ function llama3-token-counter() {
 
 ```
 <pre>
-usage: setup_env.py [-h] [--hf-repo {1bitLLM/bitnet_b1_58-large,1bitLLM/bitnet_b1_58-3B,HF1BitLLM/Llama3-8B-1.58-100B-tokens,tiiuae/Falcon3-1B-Instruct-1.58bit,tiiuae/Falcon3-3B-Instruct-1.58bit,tiiuae/Falcon3-7B-Instruct-1.58bit,tiiuae/Falcon3-10B-Instruct-1.58bit}] [--model-dir MODEL_DIR] [--log-dir LOG_DIR] [--quant-type {i2_s,tl1}] [--quant-embd]
+usage: setup_env.py [-h] [--hf-repo {1bitLLM/bitnet_b1_58-large,1bitLLM/bitnet_b1_58-3B,HF1BitLLM/Llama3-8B-1.58-100B-tokens,tiiuae/Falcon3-1B-Instruct-1.58bit,tiiuae/Falcon3-3B-Instruct-1.58bit,tiiuae/Falcon3-7B-Instruct-1.58bit,tiiuae/Falcon3-10B-Instruct-1.58bit}] [--model-dir MODEL_DIR] [--log-dir LOG_DIR] [--quant-type {i2_s,tl1,tl2}] [--quant-embd]
                     [--use-pretuned]
 
 Setup the environment for running inference
@@ -270,7 +270,7 @@ optional arguments:
                         Directory to save/load the model
   --log-dir LOG_DIR, -ld LOG_DIR
                         Directory to save the logging info
-  --quant-type {i2_s,tl1}, -q {i2_s,tl1}
+  --quant-type {i2_s,tl1,tl2}, -q {i2_s,tl1,tl2}
                         Quantization type
   --quant-embd          Quantize the embeddings to f16
   --use-pretuned, -p    Use the pretuned kernel parameters
