@@ -159,7 +159,7 @@ This project is based on the [llama.cpp](https://github.com/ggerganov/llama.cpp)
 ### Ubuntu quck start
 
 ```
-sudo apt install ccache clang libomp-dev
+sudo apt install ccache clang libomp-dev llvm-dev
 sudo swapoff -a
 
 git clone --recursive https://github.com/microsoft/BitNet.git
