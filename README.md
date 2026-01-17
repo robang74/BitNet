@@ -232,29 +232,28 @@ function llama3-token-counter() {
     cd BitNet
     ```
 
-2. **Install the dependencies**
+2. **Make sure `llama.cpp` is present (submodule or manual clone)**  
+    Many build issues happen when `3rdparty/llama.cpp` is empty because the repo was cloned without submodules.
+    ```bash
+    # from repo root
+    git submodule sync --recursive
+    git submodule update --init --recursive
+    
+3. **Install the dependencies**
     ```bash
     # (Recommended) Create a new conda environment
     conda create -n bitnet-cpp python=3.9
     conda activate bitnet-cpp
-
     pip install -r requirements.txt
     ```
-
-3. **Make sure `llama.cpp` is present (submodule or manual clone)**  
-   Many build issues happen when `3rdparty/llama.cpp` is empty because the repo was cloned without submodules.
-
-   **A) Preferred — initialize the submodule**
-   ```bash
-   # from repo root
-   git submodule sync --recursive
-   git submodule update --init --recursive
    
-4. Build the project
-```bash
-# Manually download the model and run with local path
-huggingface-cli download microsoft/BitNet-b1.58-2B-4T-gguf --local-dir models/BitNet-b1.58-2B-4T
-python setup_env.py -md models/BitNet-b1.58-2B-4T -q i2_s
+4. **Build the project**
+    ```bash
+    # Manually download the model and run with local path
+    huggingface-cli download microsoft/BitNet-b1.58-2B-4T-gguf --local-dir models/BitNet-b1.58-2B-4T
+    python setup_env.py -md models/BitNet-b1.58-2B-4T -q i2_s
+
+---
 
 ```
 <pre>
