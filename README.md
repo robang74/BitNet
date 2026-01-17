@@ -177,7 +177,7 @@ mkdir -p $mdir && wget -c "$link" -O $modprm
 { python3 -m pip install --upgrade pip; pip install -r requirements.txt; }\
  | grep -ve "^Requirement already satisfied:"
 python3 setup_env.py -md $mdir -q i2_s
-cmake --build build --config Release
+cmake --build build --config Release -j
 
 export PATH="$PATH:$PWD/build/bin/"
 sysprompt="You are a helpful assistant"
