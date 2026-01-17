@@ -204,17 +204,6 @@ function llama3-token-counter() {
       sed -ne "s/.*too long (\([0-9]\+\) tok.*/\\1/p"
   done
 }
-
-function round_to_even() { declare -i n=${1:-0}; echo $[n${2:-}+((n%2)*${3:-1})]; }
-function min() { declare -i m=${1:-} a=${2:-0}; [ $m -gt $a ] && m=$a; echo $m; }
-function max() { declare -i m=${1:-} a=${2:-0}; [ $m -lt $a ] && m=$a; echo $m; }
-
-function session_tokens() {
-  for f in "$@"; do
-    timeout 1 llama-cli -m $modprm -f "$f" -t $(nproc) $pretkns $tempr $extra_params \
-      --prompt-cache-ro -n 1 2>&1 | sed -ne "s/main: loaded .* \([0-9]\+\) tokens/\1/p"
-  done
-}
 ```
 
 ### Requirements
