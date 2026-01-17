@@ -165,6 +165,8 @@ sudo swapoff -a
 
 git clone --recursive https://github.com/microsoft/BitNet.git
 cd BitNet/
+git submodule sync --recursive
+git submodule update --init --recursive
 
 gguf="ggml-model-i2_s.gguf"
 mdir="models/BitNet-b1.58-2B-4T"
