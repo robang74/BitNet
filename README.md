@@ -186,7 +186,7 @@ python3 run_inference.py -m $modprm -p "$sysprompt" -t $(nproc) --temp 0.3 -cnv
 # Alternative with a file prompt and sepcific parameters
 tempr="--temp 0.3 --dynatemp-range 0.1 --no-warmup"
 file_prompt=${file_prompt:-/dev/null -p '$sysprompt'}
-pretkns="--override-kv tokenizer.ggml.pre=str:llama3 --mlock"
+pretkns="--override-kv tokenizer.ggml.pre=str:llama3 --mlock -t $(nproc)"
 intcnv="-i --multiline-input -cnv -co -c 4096 -b 2048 -ub 256 --keep -1 -n -1"
 llama-cli -m $modprm -f ${file_prompt} -t $(nproc) $pretkns $tempr $intcnv
 
@@ -203,13 +203,13 @@ ldd build/bin/llama-cli | grep vulkan || echo "ERROR: no vulkan"
 function perplexity() {
   for f in "$@"; do
     printf "Analysing '$f'\nwait for results ...\n"
-    llama-perplexity -m $modprm  -t $(nproc) $pretkns $tempr -f "$f" 2>&1 | grep PPL
+    llama-perplexity -m $modprm $pretkns $tempr -f "$f" 2>&1 | grep PPL
   done
 }
 
 function llama3-token-counter() {
   for f in "$@"; do
-    llama-cli -m $modprm -t $(nproc) $pretkns -f "$f" -c 1 2>&1 |\
+    llama-cli -m $modprm $pretkns -f "$f" -c 1 2>&1 |\
       sed -ne "s/.*too long (\([0-9]\+\) tok.*/\\1/p"
   done
 }
