@@ -190,6 +190,14 @@ pretkns="--override-kv tokenizer.ggml.pre=str:llama3 --mlock"
 intcnv="-i --multiline-input -cnv -co -c 4096 -b 2048 -ub 256 --keep -1 -n -1"
 llama-cli -m $modprm -f ${file_prompt} -t $(nproc) $pretkns $tempr $intcnv
 
+# Vulkan support
+
+sudo apt install vulkan-sdk
+CMAKE_ARGS="-DGGML_VULKAN=ON" python3 setup_env.py -md $mdir -q i2_s
+cmake -B build -S . -DGGML_VULKAN=ON
+cmake --build build --config Release -j
+ldd build/bin/llama-cli | grep vulkan || echo "ERROR: no vulkan"
+
 # Useful bash functions
 
 function perplexity() {
